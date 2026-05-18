@@ -1,26 +1,212 @@
 @import "tailwindcss";
 
+@theme {
+  --color-paloma-cream: #F5EFE6;
+  --color-paloma-beige: #E8D5B7;
+  --color-paloma-warm: #C9A87C;
+  --color-paloma-brown: #8B6447;
+  --color-paloma-dark: #2C1810;
+  --color-paloma-green: #4A5E4A;
+  --color-paloma-white: #FDFAF6;
+  --font-display: var(--font-playfair);
+  --font-body: var(--font-dm-sans);
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --paloma-cream: #F5EFE6;
+  --paloma-beige: #E8D5B7;
+  --paloma-warm: #C9A87C;
+  --paloma-brown: #8B6447;
+  --paloma-dark: #2C1810;
+  --paloma-green: #4A5E4A;
+  --paloma-white: #FDFAF6;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
+  font-family: var(--font-dm-sans), 'DM Sans', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--paloma-white);
+  color: var(--paloma-dark);
 }
+
+/* ─── Apple-style hero entrance animations ─── */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* WhatsApp pulse ring */
+@keyframes pulse-ring {
+  0%   { transform: scale(1); opacity: 0.55; }
+  100% { transform: scale(1.9); opacity: 0; }
+}
+
+/* Hero staggered entrance */
+.hero-animate {
+  opacity: 0;
+  animation: fadeUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+.hero-animate-scale {
+  opacity: 0;
+  animation: scaleIn 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+.delay-0  { animation-delay: 0ms; }
+.delay-1  { animation-delay: 120ms; }
+.delay-2  { animation-delay: 240ms; }
+.delay-3  { animation-delay: 360ms; }
+.delay-4  { animation-delay: 480ms; }
+
+/* ─── Scroll reveal (added via IntersectionObserver JS) ─── */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.75s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    transform 0.75s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+.reveal-delay-5 { transition-delay: 0.5s; }
+
+/* ─── Grain texture overlay ─── */
+.grain-overlay::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  opacity: 0.025;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ─── Hero blob frame ─── */
+.hero-blob {
+  border-radius: 60% 40% 55% 45% / 45% 60% 40% 55%;
+  overflow: hidden;
+}
+
+/* ─── Gallery masonry ─── */
+.gallery-masonry {
+  column-count: 2;
+  column-gap: 8px;
+}
+@media (min-width: 1024px) {
+  .gallery-masonry {
+    column-count: 4;
+  }
+}
+.gallery-item {
+  break-inside: avoid;
+  margin-bottom: 8px;
+  border-radius: 12px;
+  overflow: hidden;
+  display: block;
+}
+
+/* ─── Reviews horizontal scroll ─── */
+.reviews-scroll {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding-bottom: 4px;
+}
+.reviews-scroll::-webkit-scrollbar { display: none; }
+.review-card {
+  scroll-snap-align: start;
+  flex-shrink: 0;
+  width: calc(85vw);
+}
+@media (min-width: 1024px) {
+  .reviews-scroll {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    overflow-x: visible;
+  }
+  .review-card {
+    width: auto;
+  }
+}
+
+/* ─── WhatsApp pulse ring ─── */
+.wa-pulse-ring::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: #25D366;
+  animation: pulse-ring 2s cubic-bezier(0.3, 0, 0.7, 1) infinite;
+  z-index: -1;
+}
+
+/* ─── Service card hover ─── */
+.service-card {
+  transition: transform 200ms ease, border-color 200ms ease, box-shadow 200ms ease;
+}
+.service-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--paloma-warm);
+  box-shadow: 0 8px 32px rgba(201, 168, 124, 0.12);
+}
+
+/* ─── Gallery image hover ─── */
+.gallery-item img {
+  transition: transform 300ms ease, filter 300ms ease;
+}
+.gallery-item:hover img {
+  transform: scale(1.03);
+  filter: brightness(1.06);
+}
+
+/* ─── Smooth underline links ─── */
+.footer-link {
+  position: relative;
+  transition: color 200ms ease;
+}
+.footer-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--paloma-warm);
+  transition: width 200ms ease;
+}
+.footer-link:hover::after { width: 100%; }
