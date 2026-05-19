@@ -61,7 +61,7 @@ export default function Reviews() {
           {reviews.map((r, i) => (
             <div
               key={r.name}
-              className={`review-card reveal reveal-delay-${i + 1} rounded-2xl p-6 border flex flex-col gap-4`}
+              className={`review-card reveal rounded-2xl p-6 border flex flex-col gap-4 ${["reveal-delay-1","reveal-delay-2","reveal-delay-3"][i] ?? ""}`}
               style={{
                 background: "#fff",
                 borderColor: "var(--paloma-beige)",

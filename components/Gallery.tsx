@@ -7,45 +7,8 @@ import { trackWhatsAppClick } from "@/utils/pixel";
 const WA_HREF =
   "https://wa.me/971508057484?text=Hi%20Paloma!%20I%27d%20like%20to%20book%20an%20appointment";
 
-type GalleryItem = {
-  src: string;
-  alt: string;
-  aspectRatio: string;
-  objectPosition?: string;
-};
-
-const galleryItems: GalleryItem[] = [
-  {
-    src: "/images/Gallery/IMG_3819.JPG",
-    alt: "Nail art results at Paloma Salon, Barsha Heights Dubai",
-    aspectRatio: "3/4",
-    objectPosition: "center",
-  },
-  {
-    src: "/images/Gallery/IMG_3821.JPG",
-    alt: "Beauty treatment at Paloma Ladies Salon Dubai",
-    aspectRatio: "4/3",
-    objectPosition: "center top",
-  },
-  {
-    src: "/images/Gallery/IMG_3834.JPG",
-    alt: "Gelish manicure result at Paloma Salon Barsha Heights",
-    aspectRatio: "3/4",
-    objectPosition: "center",
-  },
-  {
-    src: "/images/Gallery/IMG_3845.JPG",
-    alt: "Professional nail service at Paloma Salon Dubai",
-    aspectRatio: "4/5",
-    objectPosition: "center",
-  },
-  {
-    src: "/images/Gallery/IMG_3847.JPG",
-    alt: "Hair and beauty treatment at Paloma Barsha Heights",
-    aspectRatio: "3/4",
-    objectPosition: "center",
-  },
-];
+const PLACEHOLDER_BG = "#ede8e0";
+const PLACEHOLDER_BORDER = "1.5px dashed #c9b8a8";
 
 export default function Gallery() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -57,7 +20,7 @@ export default function Gallery() {
     const observer = new IntersectionObserver(
       (entries) =>
         entries.forEach((e) => e.isIntersecting && e.target.classList.add("visible")),
-      { threshold: 0.08 }
+      { threshold: 0.06 }
     );
     reveals.forEach((el) => observer.observe(el));
     return () => observer.disconnect();
@@ -71,8 +34,9 @@ export default function Gallery() {
       style={{ backgroundColor: "var(--paloma-cream)" }}
     >
       <div className="mx-auto max-w-7xl px-6 lg:px-12">
+
         {/* Heading */}
-        <div className="reveal text-center mb-12">
+        <div className="reveal text-center mb-14">
           <h2
             style={{
               fontFamily: "var(--font-playfair)",
@@ -82,7 +46,7 @@ export default function Gallery() {
               letterSpacing: "-0.01em",
             }}
           >
-            Real Results
+            Our Work
           </h2>
           <p
             className="mt-3"
@@ -92,38 +56,82 @@ export default function Gallery() {
               color: "var(--paloma-brown)",
             }}
           >
-            Every photo is a real client at Paloma Salon, Barsha Heights
+            Real results from real clients at Paloma Salon, Barsha Heights
           </p>
         </div>
 
-        {/* Masonry grid */}
-        <div className="reveal gallery-masonry">
-          {galleryItems.map((item, i) => (
-            <div
-              key={i}
-              className="gallery-item"
-              style={{
-                aspectRatio: item.aspectRatio,
-                position: "relative",
-                overflow: "hidden",
-                borderRadius: "12px",
-              }}
-            >
-              <Image
-                src={item.src}
-                alt={item.alt}
-                fill
-                loading="lazy"
-                sizes="(max-width: 768px) 50vw, (max-width: 1024px) 50vw, 25vw"
-                className="object-cover"
-                style={{ objectPosition: item.objectPosition ?? "center" }}
-              />
-            </div>
-          ))}
+        {/* ── Scattered photo grid ─────────────────────────────────────
+            Desktop (4 cols):
+              col 1–2  row 1–2 → big nail hero  (IMG_3821)
+              col 3    row 1   → small nail      (IMG_3845)
+              col 4    row 1   → small hair      (IMG_3847)
+              col 3    row 2   → hair            (20260515_114758)
+              col 4    row 2   → threading       (20260515_134942)
+        ──────────────────────────────────────────────────────────── */}
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(4, 1fr)",
+            gridTemplateRows: "340px 240px",
+            gap: "10px",
+          }}
+        >
+          {/* Hero — large, spans 2 cols × 2 rows */}
+          <Cell
+            src="/images/Gallery/IMG_3821.JPG"
+            alt="Gelish nail art at Paloma Salon Dubai"
+            style={{ gridColumn: "1 / 3", gridRow: "1 / 3", borderRadius: "20px" }}
+            sizes="(max-width: 768px) 100vw, 50vw"
+          />
+          {/* Top-right stack */}
+          <Cell
+            src="/images/Gallery/IMG_3845.JPG"
+            alt="Soft gel manicure at Paloma Salon Barsha Heights"
+            style={{ gridColumn: "3", gridRow: "1", borderRadius: "20px" }}
+            sizes="(max-width: 768px) 50vw, 25vw"
+          />
+          <Cell
+            src="/images/Gallery/IMG_3847.JPG"
+            alt="Hair colour treatment at Paloma Ladies Salon"
+            style={{ gridColumn: "4", gridRow: "1", borderRadius: "20px" }}
+            sizes="(max-width: 768px) 50vw, 25vw"
+          />
+          {/* Bottom-right stack */}
+          <Cell
+            src="/images/Gallery/20260515_114758.jpg"
+            alt="Hair styling at Paloma Ladies Salon Dubai"
+            style={{ gridColumn: "3", gridRow: "2", borderRadius: "16px" }}
+            sizes="(max-width: 768px) 50vw, 25vw"
+          />
+          <Cell
+            src="/images/Gallery/20260515_134942.jpg"
+            alt="Eyebrow threading at Paloma Salon Barsha Heights"
+            style={{ gridColumn: "4", gridRow: "2", borderRadius: "16px" }}
+            sizes="(max-width: 768px) 50vw, 25vw"
+          />
+        </div>
+
+        {/* ── Video strip ─────────────────────────────────────────── */}
+        <div
+          className="mt-3"
+          style={{
+            display: "grid",
+            gridTemplateColumns: "1fr 1fr",
+            gap: "10px",
+          }}
+        >
+          <VideoCell
+            src="/images/Gallery/paloma_ladies_beauty_salon_DYR7ipLsiPB.mp4"
+            style={{ borderRadius: "16px", aspectRatio: "16/9" }}
+          />
+          <VideoCell
+            src="/images/Gallery/paloma_ladies_beauty_salon_DTISUW5kb1S.mp4"
+            style={{ borderRadius: "16px", aspectRatio: "16/9" }}
+          />
         </div>
 
         {/* CTA */}
-        <div className="reveal mt-12 text-center">
+        <div className="reveal mt-14 text-center">
           <a
             href={WA_HREF}
             target="_blank"
@@ -153,6 +161,98 @@ export default function Gallery() {
         </div>
       </div>
     </section>
+  );
+}
+
+/* ── Sub-components ─────────────────────────────────────────────── */
+
+function Cell({
+  src,
+  alt,
+  style,
+  sizes,
+}: {
+  src?: string;
+  alt?: string;
+  style?: React.CSSProperties;
+  sizes?: string;
+}) {
+  return (
+    <div
+      style={{
+        position: "relative",
+        overflow: "hidden",
+        background: src ? "transparent" : PLACEHOLDER_BG,
+        border: src ? "none" : PLACEHOLDER_BORDER,
+        ...style,
+      }}
+    >
+      {src ? (
+        <Image
+          src={src}
+          alt={alt ?? ""}
+          fill
+          loading="lazy"
+          sizes={sizes ?? "(max-width: 768px) 100vw, 33vw"}
+          className="object-cover transition-transform duration-700 ease-out"
+          style={{ transformOrigin: "center" }}
+          onMouseEnter={(e) => { (e.currentTarget as HTMLImageElement).style.transform = "scale(1.04)"; }}
+          onMouseLeave={(e) => { (e.currentTarget as HTMLImageElement).style.transform = "scale(1)"; }}
+        />
+      ) : (
+        <div
+          style={{
+            width: "100%",
+            height: "100%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            color: "#b0a090",
+          }}
+        >
+          <ImagePlaceholderIcon />
+        </div>
+      )}
+    </div>
+  );
+}
+
+function VideoCell({
+  src,
+  style,
+}: {
+  src?: string;
+  style?: React.CSSProperties;
+}) {
+  return (
+    <div style={{ overflow: "hidden", background: "#000", ...style }}>
+      <video
+        src={src}
+        controls
+        muted
+        playsInline
+        preload="metadata"
+        style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+      />
+    </div>
+  );
+}
+
+function ImagePlaceholderIcon() {
+  return (
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <rect x="3" y="3" width="18" height="18" rx="3"/>
+      <circle cx="8.5" cy="8.5" r="1.5"/>
+      <path d="M21 15l-5-5L5 21"/>
+    </svg>
+  );
+}
+
+function PlayIcon() {
+  return (
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <polygon points="5 3 19 12 5 21 5 3"/>
+    </svg>
   );
 }
 

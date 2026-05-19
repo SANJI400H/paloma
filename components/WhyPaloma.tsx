@@ -69,7 +69,7 @@ export default function WhyPaloma() {
           {reasons.map((r, i) => (
             <div
               key={r.title}
-              className={`reveal reveal-delay-${i + 1} flex flex-col gap-4`}
+              className={`reveal flex flex-col gap-4 ${["reveal-delay-1","reveal-delay-2","reveal-delay-3","reveal-delay-4"][i] ?? ""}`}
             >
               {/* Icon container */}
               <div
@@ -84,7 +84,7 @@ export default function WhyPaloma() {
                 {r.icon}
               </div>
               <div>
-                <h3
+                  <h3
                   className="mb-2"
                   style={{
                     fontFamily: "var(--font-playfair)",

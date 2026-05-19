@@ -37,8 +37,8 @@ export default function Hero() {
             <span
               className="hero-animate delay-0 block font-body text-xs tracking-widest uppercase"
               style={{ color: "var(--paloma-warm)", fontFamily: "var(--font-dm-sans)" }}
-            >
-              Barsha Heights, Dubai
+            > 
+              Paloma Ladies Beauty Salon
             </span>
 
             {/* H1 */}
@@ -133,12 +133,12 @@ export default function Hero() {
               style={{
                 width: "100%",
                 maxWidth: "460px",
-                aspectRatio: "3/4",
+                aspectRatio: "4/4",
                 background: "var(--paloma-beige)",
               }}
             >
               <Image
-                src="/images/logo.jpg"
+                src="/images/logo .png"
                 alt="Paloma Salon — nail and beauty services in Barsha Heights Dubai"
                 fill
                 priority
