@@ -119,15 +119,13 @@ body {
   overflow: hidden;
 }
 
-/* ─── Gallery masonry ─── */
+/* ─── Gallery masonry (legacy) ─── */
 .gallery-masonry {
   column-count: 2;
   column-gap: 8px;
 }
 @media (min-width: 1024px) {
-  .gallery-masonry {
-    column-count: 4;
-  }
+  .gallery-masonry { column-count: 4; }
 }
 .gallery-item {
   break-inside: avoid;
@@ -135,6 +133,79 @@ body {
   border-radius: 12px;
   overflow: hidden;
   display: block;
+}
+
+/* ─── Scattered gallery grid (responsive) ─── */
+.gallery-photo-grid {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: 1fr 1fr;
+}
+/* hero: full width on mobile */
+.gallery-photo-hero {
+  grid-column: 1 / -1;
+  aspect-ratio: 4/3;
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+}
+.gallery-photo-cell {
+  aspect-ratio: 1/1;
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+}
+/* tablet: 3-col, hero tall on left */
+@media (min-width: 640px) {
+  .gallery-photo-grid {
+    grid-template-columns: 2fr 1fr 1fr;
+    grid-template-rows: 260px 190px;
+  }
+  .gallery-photo-hero {
+    grid-column: 1 / 2;
+    grid-row: 1 / 3;
+    aspect-ratio: unset;
+    border-radius: 20px;
+  }
+  .gallery-photo-cell { aspect-ratio: unset; }
+  .gallery-cell-b { grid-column: 2; grid-row: 1; border-radius: 16px; }
+  .gallery-cell-c { grid-column: 3; grid-row: 1; border-radius: 16px; }
+  .gallery-cell-d { grid-column: 2; grid-row: 2; border-radius: 12px; }
+  .gallery-cell-e { grid-column: 3; grid-row: 2; border-radius: 12px; }
+}
+/* desktop: 4-col Apple-style scattered */
+@media (min-width: 1024px) {
+  .gallery-photo-grid {
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 340px 240px;
+  }
+  .gallery-photo-hero {
+    grid-column: 1 / 3;
+    grid-row: 1 / 3;
+    border-radius: 20px;
+  }
+  .gallery-cell-b { grid-column: 3; grid-row: 1; border-radius: 20px; }
+  .gallery-cell-c { grid-column: 4; grid-row: 1; border-radius: 20px; }
+  .gallery-cell-d { grid-column: 3; grid-row: 2; border-radius: 16px; }
+  .gallery-cell-e { grid-column: 4; grid-row: 2; border-radius: 16px; }
+}
+
+/* ─── Video strip ─── */
+.gallery-video-strip {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+  margin-top: 8px;
+}
+@media (min-width: 640px) {
+  .gallery-video-strip { grid-template-columns: 1fr 1fr; }
+}
+.gallery-video-cell {
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+  aspect-ratio: 16/9;
+  background: #000;
 }
 
 /* ─── Reviews horizontal scroll ─── */
