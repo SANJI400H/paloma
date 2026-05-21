@@ -196,7 +196,7 @@ export default function Footer() {
               textAlign: "center",
             }}
           >
-            © 2025 Paloma Ladies Beauty Salon · Barsha Heights, Dubai
+            © 2026 Paloma Ladies Beauty Salon · Barsha Heights, Dubai
           </p>
         </div>
       </div>

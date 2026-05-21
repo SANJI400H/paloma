@@ -20,19 +20,54 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Paloma Ladies Beauty Salon | Nails, Hair & Waxing | Barsha Heights Dubai",
+  metadataBase: new URL("https://www.palomaladiessalon.com"),
+  title: "Paloma Ladies Beauty Salon | Nails, Hair, Waxing & Threading | Barsha Heights Dubai",
   description:
-    "Professional ladies beauty salon in Barsha Heights, Dubai. Gelish nails from AED 89, keratin treatment from AED 169, hair, waxing and threading. Book on WhatsApp today.",
-  keywords:
-    "ladies salon barsha heights, nail salon dubai, gelish manicure dubai, keratin treatment barsha heights, hair salon tecom, waxing threading dubai",
+    "Professional ladies beauty salon in Barsha Heights, Dubai. Nail services, hair treatments, keratin, waxing and threading. Located at Golden Tulip Media Hotel, Hessa Street. Book on WhatsApp.",
+  keywords: [
+    "ladies salon barsha heights",
+    "nail salon dubai",
+    "beauty salon barsha heights",
+    "keratin treatment dubai",
+    "hair salon tecom",
+    "waxing threading dubai",
+    "gelish nails dubai",
+    "ladies beauty salon dubai",
+    "paloma salon dubai",
+    "salon near me barsha heights",
+    "nail salon near me dubai",
+    "hair treatment barsha heights",
+  ],
+  authors: [{ name: "Paloma Ladies Beauty Salon" }],
+  creator: "Paloma Ladies Beauty Salon",
   openGraph: {
     title: "Paloma Ladies Beauty Salon | Barsha Heights Dubai",
     description:
-      "Nails, Hair, Waxing and Threading in Barsha Heights. Book on WhatsApp.",
-    url: "https://palomasalon.ae",
+      "Professional nail, hair, waxing and threading services in Barsha Heights. Book on WhatsApp today.",
+    url: "https://www.palomaladiessalon.com",
     siteName: "Paloma Ladies Beauty Salon",
     locale: "en_AE",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Paloma Ladies Beauty Salon | Barsha Heights Dubai",
+    description:
+      "Professional nail, hair, waxing and threading services in Barsha Heights Dubai.",
+  },
+  alternates: {
+    canonical: "https://www.palomaladiessalon.com",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
   },
 };
 
@@ -41,6 +76,46 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={`${playfair.variable} ${dmSans.variable}`}>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "BeautySalon",
+              name: "Paloma Ladies Beauty Salon",
+              image: "https://www.palomaladiessalon.com/images/logo.jpg",
+              url: "https://www.palomaladiessalon.com",
+              telephone: "+971508057484",
+              address: {
+                "@type": "PostalAddress",
+                streetAddress: "Golden Tulip Media Hotel, Hessa Street",
+                addressLocality: "Al Barsha Heights",
+                addressRegion: "Dubai",
+                addressCountry: "AE",
+              },
+              geo: {
+                "@type": "GeoCoordinates",
+                latitude: 25.0986,
+                longitude: 55.1699,
+              },
+              openingHoursSpecification: {
+                "@type": "OpeningHoursSpecification",
+                dayOfWeek: ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
+                opens: "10:00",
+                closes: "20:00",
+              },
+              priceRange: "AED 15 - AED 1500",
+              description:
+                "Paloma Ladies Beauty Salon in Barsha Heights, Dubai. Professional nail, hair, waxing and threading services for women. Located at Golden Tulip Media Hotel, Hessa Street.",
+              sameAs: [
+                "https://www.instagram.com/paloma_ladies_beauty_salon/",
+                "https://www.facebook.com/PalomaDubai",
+              ],
+            }),
+          }}
+        />
+      </head>
       <body className="overflow-x-hidden antialiased">
         {children}
         <WhatsAppButton />

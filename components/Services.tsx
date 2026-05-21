@@ -6,34 +6,110 @@ import { trackWhatsAppClick, trackServicesView } from "@/utils/pixel";
 const WA_HREF =
   "https://wa.me/971508057484?text=Hi%20Paloma!%20I%27d%20like%20to%20book%20an%20appointment";
 
-const nailServices = [
-  { name: "Gelish Manicure", price: "AED 89", popular: true },
-  { name: "Gelish Pedicure", price: "AED 99" },
-  { name: "Gelish Mani + Pedi", price: "AED 179" },
-  { name: "Classic Manicure", price: "AED 59" },
-  { name: "Classic Pedicure", price: "AED 69" },
-  { name: "Classic Mani + Pedi", price: "AED 129" },
-  { name: "FREE Removal with Gelish", price: "" },
+type Service = { name: string; price: string; popular?: boolean; special?: boolean };
+
+const hairServices: Service[] = [
+  { name: "Blow-dry",                        price: "from AED 150" },
+  { name: "Hair styling",                    price: "from AED 200" },
+  { name: "Haircut + Blow-dry",              price: "from AED 150" },
+  { name: "Roots colour + Blow-dry",         price: "from AED 225" },
+  { name: "Full colour + Blow-dry",          price: "from AED 350" },
+  { name: "Half highlights + Blow-dry",      price: "from AED 350" },
+  { name: "Full highlights + Blow-dry",      price: "from AED 400" },
+  { name: "Toner",                           price: "AED 150" },
+  { name: "Treatment + Blow-dry",            price: "from AED 150" },
+  { name: "Keratin Treatment",               price: "from AED 199", special: true },
+  { name: "Brazilian Blow Out",              price: "AED 1,500" },
+  { name: "Protein Treatment",               price: "AED 1,000" },
 ];
 
-const hairServices = [
-  { name: "Blow-dry + Wash (Short Hair)", price: "AED 79" },
-  { name: "Blow-dry + Wash (Medium/Long)", price: "AED 99" },
-  { name: "Haircut + Blow-dry", price: "AED 119" },
-  { name: "Treatment + Blow-dry", price: "AED 129" },
-  { name: "Roots Colour + Blow-dry", price: "AED 199" },
-  { name: "Full Colour + Blow-dry", price: "from AED 199" },
-  { name: "Highlights + Blow-dry", price: "from AED 199" },
-  { name: "Protein Treatment", price: "from AED 199" },
-  { name: "Keratin Treatment", price: "from AED 169", special: true },
+const nailServices: Service[] = [
+  // Acrylic / Gel
+  { name: "Acrylic basic refill",            price: "AED 200" },
+  { name: "Overlay: acrylic/gel",            price: "AED 300" },
+  { name: "Full set: acrylic/gel",           price: "AED 300" },
+  { name: "Full set acrylic french",         price: "AED 350" },
+  { name: "Full set ombre: acrylic/gel",     price: "AED 320" },
+  { name: "Refill ombre",                    price: "AED 250" },
+  { name: "Refill french: acrylic/gel",      price: "AED 280" },
+  { name: "Repair per nail",                 price: "AED 30" },
+  { name: "Removal: acrylic/gel",            price: "AED 100" },
+  { name: "Removal gellish: hand/feet",      price: "AED 35" },
+  { name: "Removal nail fake",               price: "AED 50" },
+  { name: "Buff and top: acrylic/gel",       price: "AED 150" },
+  // Manicure / Pedicure
+  { name: "Manicure classic",                price: "AED 80" },
+  { name: "Pedicure classic",                price: "AED 90" },
+  { name: "Combo classic: mani/pedi",        price: "AED 150" },
+  { name: "Gelish manicure",                 price: "AED 130", popular: true },
+  { name: "Gelish pedicure",                 price: "AED 150" },
+  { name: "Combo gel: mani/pedi",            price: "AED 250" },
+  { name: "Gelish french hand",              price: "AED 140" },
+  { name: "Gelish french feet",              price: "AED 160" },
+  { name: "Gelish french combo",             price: "AED 280" },
+  // Polish
+  { name: "Gelish polish hand",              price: "AED 60" },
+  { name: "Gelish polish feet",              price: "AED 70" },
+  { name: "Gelish french polish combo",      price: "AED 130" },
+  { name: "Polish change hand",              price: "AED 40" },
+  { name: "Polish change feet",              price: "AED 45" },
+  { name: "Combo polish change",             price: "AED 80" },
+  { name: "French polish change: hand/feet", price: "AED 50" },
+  { name: "Combo polish change french",      price: "AED 100" },
+  // Nail Art
+  { name: "Nail art per nail",               price: "AED 10" },
+  { name: "Hard nail art",                   price: "AED 15" },
+  { name: "Full set of nail art",            price: "AED 100" },
+  { name: "3D Nail art",                     price: "AED 25" },
+  { name: "Sticker art per nail",            price: "AED 5" },
+  { name: "Nail crystal",                    price: "AED 10" },
+  // Kids
+  { name: "Manicure for kids",               price: "AED 50" },
+  { name: "Pedicure for kids",               price: "AED 60" },
+  { name: "Colour hand for kids",            price: "AED 20" },
+  { name: "Colour feet for kids",            price: "AED 30" },
+  // Extras & Specials
+  { name: "Spa treatment",                   price: "AED 120" },
+  { name: "Callus removal",                  price: "AED 100" },
+  { name: "Ingrown removal",                 price: "AED 30" },
+  { name: "Paloma client gelish removal",    price: "AED 25" },
+  { name: "Chrome for hand",                 price: "AED 150" },
+  { name: "Chrome for feet (with cleaning)", price: "AED 170" },
+  { name: "Gelish top coat only",            price: "AED 15" },
+  { name: "Manicure classic french",         price: "AED 85" },
+  { name: "Pedicure classic french",         price: "AED 95" },
+  { name: "Combo classic french",            price: "AED 170" },
+  { name: "Ombre normal",                    price: "AED 30" },
+  { name: "Ombre gel",                       price: "AED 40" },
+  { name: "Hand cleaning only",              price: "AED 70" },
+  { name: "Feet cleaning only",              price: "AED 80" },
+  { name: "Combo cleaning",                  price: "AED 140" },
 ];
 
-const waxServices = [
-  { name: "Upper Lip Threading", price: "AED 20" },
-  { name: "Eyebrows Threading", price: "AED 20" },
-  { name: "Full Face Threading", price: "AED 69" },
-  { name: "Full Body Waxing", price: "from AED 199" },
-  { name: "Full Arms and Legs", price: "from AED 119" },
+const waxingServices: Service[] = [
+  { name: "Eyebrows",                        price: "AED 30" },
+  { name: "Upper lip",                        price: "AED 20" },
+  { name: "Underarms",                        price: "AED 35" },
+  { name: "Neck wax",                         price: "AED 45" },
+  { name: "Full face (without brows)",        price: "AED 100" },
+  { name: "Back/stomach",                     price: "AED 45" },
+  { name: "Bikini",                           price: "AED 110" },
+  { name: "Full arms",                        price: "AED 80" },
+  { name: "Half arms",                        price: "AED 60" },
+  { name: "Full legs",                        price: "AED 90" },
+  { name: "Half legs",                        price: "AED 65" },
+  { name: "Full body (without bikini)",       price: "AED 250" },
+  { name: "Full body (with bikini)",          price: "AED 300" },
+];
+
+const threadingServices: Service[] = [
+  { name: "Eyebrows",                         price: "AED 30" },
+  { name: "Upper lip",                        price: "AED 15" },
+  { name: "Full face (with brows)",           price: "AED 100" },
+  { name: "Full face and neck",               price: "AED 130" },
+  { name: "Chin",                             price: "AED 25" },
+  { name: "Forehead",                         price: "AED 25" },
+  { name: "Sideburns",                        price: "AED 25" },
 ];
 
 export default function Services() {
@@ -109,92 +185,33 @@ export default function Services() {
           </p>
         </div>
 
-        {/* Cards grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Nail Services */}
+        {/* Cards grid — 2×2 on desktop */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+          {/* ── Hair Services ── */}
           <div
             className="service-card reveal reveal-delay-1 rounded-2xl p-7 border"
-            style={{
-              background: "#fff",
-              borderColor: "var(--paloma-beige)",
-            }}
+            style={{ background: "#fff", borderColor: "var(--paloma-beige)" }}
           >
-            <div className="flex items-center gap-3 mb-5">
-              <NailIcon />
-              <h3
-                style={{
-                  fontFamily: "var(--font-playfair)",
-                  fontSize: "22px",
-                  fontWeight: 600,
-                  color: "var(--paloma-dark)",
-                }}
-              >
-                Nail Services
-              </h3>
-            </div>
-            <ul className="space-y-3">
-              {nailServices.map((s) => (
-                <li key={s.name} className="flex items-center justify-between gap-2">
-                  <span
-                    className="flex items-center gap-2"
-                    style={{ fontFamily: "var(--font-dm-sans)", fontSize: "14px", color: "var(--paloma-dark)" }}
-                  >
-                    {s.name}
-                    {s.popular && (
-                      <span
-                        className="rounded-full px-2 py-0.5 text-white"
-                        style={{
-                          background: "var(--paloma-green)",
-                          fontSize: "10px",
-                          fontFamily: "var(--font-dm-sans)",
-                          fontWeight: 600,
-                          letterSpacing: "0.04em",
-                          whiteSpace: "nowrap",
-                        }}
-                      >
-                        Most Popular
-                      </span>
-                    )}
-                  </span>
-                  {s.price && (
-                    <span
-                      style={{
-                        fontFamily: "var(--font-dm-sans)",
-                        fontSize: "14px",
-                        fontWeight: 600,
-                        color: "var(--paloma-brown)",
-                        whiteSpace: "nowrap",
-                      }}
-                    >
-                      {s.price}
-                    </span>
-                  )}
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Hair Services */}
-          <div
-            className="service-card reveal reveal-delay-2 rounded-2xl p-7 border"
-            style={{
-              background: "#fff",
-              borderColor: "var(--paloma-beige)",
-            }}
-          >
-            <div className="flex items-center gap-3 mb-5">
+            <div className="flex items-center gap-3 mb-3">
               <ScissorsIcon />
-              <h3
-                style={{
-                  fontFamily: "var(--font-playfair)",
-                  fontSize: "22px",
-                  fontWeight: 600,
-                  color: "var(--paloma-dark)",
-                }}
-              >
+              <h3 style={{ fontFamily: "var(--font-playfair)", fontSize: "22px", fontWeight: 600, color: "var(--paloma-dark)" }}>
                 Hair Services
               </h3>
             </div>
+            {/* Hair length note */}
+            <p
+              className="mb-5 rounded-xl px-4 py-2"
+              style={{
+                fontFamily: "var(--font-dm-sans)",
+                fontSize: "12px",
+                color: "var(--paloma-brown)",
+                background: "var(--paloma-cream)",
+                lineHeight: 1.5,
+              }}
+            >
+              Prices vary by hair length — short, medium, long, and extra long. Message us on WhatsApp for an exact quote.
+            </p>
             <ul className="space-y-3">
               {hairServices.map((s) => (
                 <li key={s.name} className="flex items-center justify-between gap-2">
@@ -206,28 +223,13 @@ export default function Services() {
                     {s.special && (
                       <span
                         className="rounded-full px-2 py-0.5 text-white"
-                        style={{
-                          background: "var(--paloma-warm)",
-                          fontSize: "10px",
-                          fontFamily: "var(--font-dm-sans)",
-                          fontWeight: 600,
-                          letterSpacing: "0.04em",
-                          whiteSpace: "nowrap",
-                        }}
+                        style={{ background: "var(--paloma-warm)", fontSize: "10px", fontFamily: "var(--font-dm-sans)", fontWeight: 600, letterSpacing: "0.04em", whiteSpace: "nowrap" }}
                       >
                         Summer Special
                       </span>
                     )}
                   </span>
-                  <span
-                    style={{
-                      fontFamily: "var(--font-dm-sans)",
-                      fontSize: "14px",
-                      fontWeight: 600,
-                      color: "var(--paloma-brown)",
-                      whiteSpace: "nowrap",
-                    }}
-                  >
+                  <span style={{ fontFamily: "var(--font-dm-sans)", fontSize: "14px", fontWeight: 600, color: "var(--paloma-brown)", whiteSpace: "nowrap" }}>
                     {s.price}
                   </span>
                 </li>
@@ -235,50 +237,92 @@ export default function Services() {
             </ul>
           </div>
 
-          {/* Waxing & Threading */}
+          {/* ── Nail Services ── */}
           <div
-            className="service-card reveal reveal-delay-3 rounded-2xl p-7 border"
-            style={{
-              background: "#fff",
-              borderColor: "var(--paloma-beige)",
-            }}
+            className="service-card reveal reveal-delay-2 rounded-2xl p-7 border"
+            style={{ background: "#fff", borderColor: "var(--paloma-beige)" }}
           >
             <div className="flex items-center gap-3 mb-5">
-              <SparkleIcon />
-              <h3
-                style={{
-                  fontFamily: "var(--font-playfair)",
-                  fontSize: "22px",
-                  fontWeight: 600,
-                  color: "var(--paloma-dark)",
-                }}
-              >
-                Waxing & Threading
+              <NailIcon />
+              <h3 style={{ fontFamily: "var(--font-playfair)", fontSize: "22px", fontWeight: 600, color: "var(--paloma-dark)" }}>
+                Nail Services
               </h3>
             </div>
             <ul className="space-y-3">
-              {waxServices.map((s) => (
+              {nailServices.map((s) => (
                 <li key={s.name} className="flex items-center justify-between gap-2">
                   <span
+                    className="flex items-center gap-2 flex-wrap"
                     style={{ fontFamily: "var(--font-dm-sans)", fontSize: "14px", color: "var(--paloma-dark)" }}
                   >
                     {s.name}
+                    {s.popular && (
+                      <span
+                        className="rounded-full px-2 py-0.5 text-white"
+                        style={{ background: "var(--paloma-green)", fontSize: "10px", fontFamily: "var(--font-dm-sans)", fontWeight: 600, letterSpacing: "0.04em", whiteSpace: "nowrap" }}
+                      >
+                        Most Popular
+                      </span>
+                    )}
                   </span>
-                  <span
-                    style={{
-                      fontFamily: "var(--font-dm-sans)",
-                      fontSize: "14px",
-                      fontWeight: 600,
-                      color: "var(--paloma-brown)",
-                      whiteSpace: "nowrap",
-                    }}
-                  >
+                  <span style={{ fontFamily: "var(--font-dm-sans)", fontSize: "14px", fontWeight: 600, color: "var(--paloma-brown)", whiteSpace: "nowrap" }}>
                     {s.price}
                   </span>
                 </li>
               ))}
             </ul>
           </div>
+
+          {/* ── Waxing ── */}
+          <div
+            className="service-card reveal reveal-delay-3 rounded-2xl p-7 border"
+            style={{ background: "#fff", borderColor: "var(--paloma-beige)" }}
+          >
+            <div className="flex items-center gap-3 mb-5">
+              <SparkleIcon />
+              <h3 style={{ fontFamily: "var(--font-playfair)", fontSize: "22px", fontWeight: 600, color: "var(--paloma-dark)" }}>
+                Waxing
+              </h3>
+            </div>
+            <ul className="space-y-3">
+              {waxingServices.map((s) => (
+                <li key={s.name} className="flex items-center justify-between gap-2">
+                  <span style={{ fontFamily: "var(--font-dm-sans)", fontSize: "14px", color: "var(--paloma-dark)" }}>
+                    {s.name}
+                  </span>
+                  <span style={{ fontFamily: "var(--font-dm-sans)", fontSize: "14px", fontWeight: 600, color: "var(--paloma-brown)", whiteSpace: "nowrap" }}>
+                    {s.price}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* ── Threading ── */}
+          <div
+            className="service-card reveal reveal-delay-4 rounded-2xl p-7 border"
+            style={{ background: "#fff", borderColor: "var(--paloma-beige)" }}
+          >
+            <div className="flex items-center gap-3 mb-5">
+              <ThreadIcon />
+              <h3 style={{ fontFamily: "var(--font-playfair)", fontSize: "22px", fontWeight: 600, color: "var(--paloma-dark)" }}>
+                Threading
+              </h3>
+            </div>
+            <ul className="space-y-3">
+              {threadingServices.map((s) => (
+                <li key={s.name} className="flex items-center justify-between gap-2">
+                  <span style={{ fontFamily: "var(--font-dm-sans)", fontSize: "14px", color: "var(--paloma-dark)" }}>
+                    {s.name}
+                  </span>
+                  <span style={{ fontFamily: "var(--font-dm-sans)", fontSize: "14px", fontWeight: 600, color: "var(--paloma-brown)", whiteSpace: "nowrap" }}>
+                    {s.price}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
         </div>
 
         {/* CTA strip */}
@@ -351,6 +395,14 @@ function SparkleIcon() {
     <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
       <path d="M12 2l2.09 6.26L20 10l-5.91 1.74L12 18l-2.09-6.26L4 10l5.91-1.74L12 2z" stroke="#C9A87C" strokeWidth="1.8" strokeLinejoin="round"/>
       <path d="M5 5l1 2M19 5l-1 2M5 19l1-2M19 19l-1-2" stroke="#C9A87C" strokeWidth="1.5" strokeLinecap="round"/>
+    </svg>
+  );
+}
+
+function ThreadIcon() {
+  return (
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M4 7c4-2 8 2 12 0M4 12c4-2 8 2 12 0M4 17c4-2 8 2 12 0" stroke="#C9A87C" strokeWidth="1.8" strokeLinecap="round"/>
     </svg>
   );
 }

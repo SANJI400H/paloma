@@ -4,15 +4,15 @@ import { useEffect, useRef } from "react";
 
 const reviews = [
   {
-    text: "Came for a gelish manicure and left absolutely obsessed. The technician took her time and the finish was perfect. Already booked my next appointment.",
-    name: "Sarah M.",
+    text: "Got my gelish manicure done here and honestly could not be happier. The finish is perfect and the technician was so careful and professional. Already booked my next appointment.",
+    name: "Nadia R.",
   },
   {
-    text: "Best keratin treatment I have had in Dubai. My hair is so smooth even in this heat. The price was very fair and the salon is spotlessly clean.",
-    name: "Fatima A.",
+    text: "Best keratin treatment I have had since moving to Dubai. My hair has never been this smooth, even in this heat. Very fair price and the salon is spotlessly clean. Will not go anywhere else.",
+    name: "Sara M.",
   },
   {
-    text: "I have been coming here every three weeks for nails and threading. The team knows me by name now. Would not go anywhere else in Barsha Heights.",
+    text: "I come here every three weeks for nails and eyebrows. The team is warm, professional, and they remember exactly how I like things. The best salon in Barsha Heights without question.",
     name: "Priya K.",
   },
 ];

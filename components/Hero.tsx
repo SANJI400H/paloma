@@ -23,8 +23,8 @@ export default function Hero() {
           display: "grid",
           gridTemplateColumns: "1fr",
           alignItems: "center",
-          paddingTop: "5rem",
-          paddingBottom: "4rem",
+          paddingTop: "2rem",
+          paddingBottom: "2rem",
         }}
       >
         <div
@@ -71,9 +71,9 @@ export default function Hero() {
                 maxWidth: "480px",
               }}
             >
-              Nails · Hair · Waxing · Threading 
-              Professional ladies salon at
-              Golden Tulip Media Hotel, Hessa Street
+              Nails · Hair · Waxing · Threading
+              <br />
+              Professional ladies salon at Golden Tulip Media Hotel, Hessa Street
             </p>
 
             {/* CTA Button */}
@@ -132,7 +132,7 @@ export default function Hero() {
               className="hero-blob relative"
               style={{
                 width: "100%",
-                maxWidth: "460px",
+                maxWidth: "368px",
                 aspectRatio: "4/4",
                 background: "var(--paloma-beige)",
               }}
@@ -163,7 +163,7 @@ export default function Hero() {
               }}
             >
               <Image
-                src="/images/cover.jpg"
+                src="/images/logo .png"
                 alt="Paloma Salon — professional beauty services Dubai"
                 fill
                 priority
